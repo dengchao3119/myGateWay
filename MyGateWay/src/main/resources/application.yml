@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: MyGateWay
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        register-enabled: true
+        namespace: da8ba5de-6fd4-428c-9e64-7dcb38d28805
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: demo
+        uri: lb://demo  #根据服务名做负载均衡
+        predicates:
+        - Path=/nacos/** # 拦截的请求路径
+        #- Weight=service,5 #利用配置做灰度发布，service是固定的，95是占比
+
+#      - id: demo1
+#        uri: lb://demo1  #根据服务名做负载均衡
+#        predicates:
+#          - Path=/nacos/** #拦截的请求路径
+#          - Weight=service,95  #利用配置做灰度发布，service是固定的，95是占比
+
+
+
+
+
+
+server:
+  port: 9990
+
+
+
